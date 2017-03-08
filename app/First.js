@@ -14,23 +14,23 @@ class First extends Component {
 
   constructor(props, context) {
     super(props, context);
-    console.log("there");
 
-    this.state = {
+    /*this.state = {
       usersD: null
-    };
+    };*/
 
   }
 
-  componentDidMount() {
-    fetch('http://192.168.0.127/levelUpworkspace/laravel/react/public/users')
-    .then((res) => res.json())
-    .then((resJ) => {
-      this.setState({
-        usersD: resJ.users
-      })
-    })
-  }
+  // componentDidMount() {
+  //   fetch('http://192.168.0.127/levelUpworkspace/laravel/react/public/users')
+  //   .then((res) => res.json())
+  //   .then((resJ) => {
+  //     console.log('data  in mount is',resJ);
+  //     this.setState({
+  //       usersD: resJ.users
+  //     })
+  //   })
+  // }
 
   onbButtonPressed() {
     this.props.navigator.push({
@@ -39,9 +39,10 @@ class First extends Component {
   }
 
   render() {
-    var res = "";
-    if(this.state.usersD != null) {
-      var res = this.state.usersD.map((item, i) => {
+    console.log('data in first is',this.props.users);
+    if(this.props.users) {
+      var res = this.props.users.map((item, i) => {
+
         return (
           <View>
             <Text key={i}>
@@ -54,16 +55,16 @@ class First extends Component {
             style={{width: 40, height: 40}} />
           </View>
         );
-      })
+      });
     }
 
     return (
       <View style={styles.container}>
-        <Text style={styles.largeText}>hi this is an ordinary text</Text>
+        {res}
         <TouchableHighlight
           onPress={this.onbButtonPressed.bind(this)}
-          style={styles.button}>
-          <Text>i will not add anything Yet :(</Text>
+          style={styles.buttonContainerBack}>
+          <Text>Create User</Text>
         </TouchableHighlight>
       </View>
     );
@@ -93,6 +94,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
      alignSelf: 'stretch',
      backgroundColor: '#3fb0ac',
+  },
+  buttonContainerBack: {
+    backgroundColor: 'silver',
+    paddingVertical: 10,
+    marginTop: 10
   },
   buttonText: {
     fontFamily: 'HelveticaNeue-CondensedBold',

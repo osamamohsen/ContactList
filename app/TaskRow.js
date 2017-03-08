@@ -26,16 +26,6 @@ const styles = StyleSheet.create({
 
 export default class TaskRow extends Component {
 
-  constructor(props, context) {
-    super(props, context);
-    console.log("there");
-
-    this.state = {
-      usersD: null
-    };
-
-  }
-  
   render() {
     return (
       <View style={styles.container}>

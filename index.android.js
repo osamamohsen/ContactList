@@ -5,7 +5,6 @@ import {
   Text,
   View,
   Navigator,
-  Image,
 } from 'react-native';
 import First from './app/First';
 import Second from './app/Second';
@@ -13,34 +12,34 @@ import Second from './app/Second';
 export default class learningReactNative extends Component {
 
   // fetch method
-      // constructor(props, context) {
-      //   super(props, context);
-      //   console.log("there");
-      //
-      //   this.state = {
-      //     usersD: null
-      //   };
-      //
-      // }
+      constructor(props, context) {
+        super(props, context);
+        this.state = {
+          usersD: null
+        };
+      }
 
 
-      // componentDidMount() {
-      //   fetch('http://192.168.1.106/ReactLaravel/react/public/users')
-      //   .then((res) => res.json())
-      //   .then((resJ) => {
-      //     this.setState({
-      //       usersD: resJ.users
-      //     })
-      //   })
-      // }
+      componentDidMount() {
+        fetch('http://192.168.0.127/levelUpworkspace/laravel/react/public/users')
+        .then((res) => res.json())
+        .then((resJ) => {
+          console.log('data  in i mount is',resJ);
+          this.setState({
+            usersD: resJ.users
+          })
+        })
+      }
+
 
 navigatorRenderScene(route, navigator) {
   _navigator=  navigator;
-
+  console.log('before renderSc console');
+  console.log('in renderSc', this.state.usersD);
   switch (route.id) {
     case 'First':
       return (
-        <First navigator={navigator} title='First' />
+        <First users={this.state.usersD} navigator={navigator} title='First' />
       );
     case 'Second':
       return (
@@ -64,14 +63,15 @@ navigatorRenderScene(route, navigator) {
     //     );
     //   })
     // }
-
+    console.log('before nav console');
+    console.log('data before nav', this.state.usersD);
     return (
       <Navigator
         initialRoute={{
           id: 'First'
         }}
         renderScene = {
-          this.navigatorRenderScene
+          this.navigatorRenderScene.bind(this)
         }
       />
     );
