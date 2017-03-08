@@ -8,7 +8,13 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
+  PixelRatio,
+  Image,
+  Platform,
 } from 'react-native';
+
+import ImagePicker from 'react-native-image-picker';
+var FileUpload = require('NativeModules').FileUpload;
 
 class Second extends Component {
   constructor (){
@@ -19,7 +25,54 @@ class Second extends Component {
     last_name: "",
     image: "",
     errors: [],
+    avatarSource: null,
+    imgBase64: '',
   }
+}
+
+  selectPhotoTapped() {
+  const options = {
+    quality: 1.0,
+    maxWidth: 500,
+    maxHeight: 500,
+    storageOptions: {
+      skipBackup: true
+    }
+  };
+
+  ImagePicker.showImagePicker(options, (response) => {
+    console.log('Response = ', response);
+
+    if (response.didCancel) {
+      console.log('User cancelled photo picker');
+    }
+    else if (response.error) {
+      console.log('ImagePicker Error: ', response.error);
+    }
+    else if (response.customButton) {
+      console.log('User tapped custom button: ', response.customButton);
+    }
+    else {
+      var source, temp;
+      // You can display the image using either:
+      //source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+
+      temp = response.data;
+      console.log("temp",temp);
+      //Or:
+      if (Platform.OS === 'android') {
+        source = {uri: response.uri, isStatic: true};
+        console.log("source",source);
+      } else {
+        source = {uri: response.uri.replace('file://', ''), isStatic: true};
+      }
+
+      this.setState({
+        avatarSource: source,
+        imgBase64: temp,
+      });
+    }
+  });
 
 }
 
@@ -58,25 +111,22 @@ onbButtonPressedBack(){
       <View behavior="padding" style={styles.container}>
         <Text>
           {this.state.first_name}
-          Enter Fist Name
+
 
         </Text>
         <TextInput
-          onChangeText={(val)=>this.setState({first_name: val})}
+          onChangeText={(val)=>this.setState({first_name: val})} placeholder="Enter Fist Name"
           style={styles.input} returnKeyType="next" />
 
-        <Text>
-          {this.state.last_name}
-          Enter Last Name
-        </Text>
-        <TextInput onChangeText={(val)=>this.setState({last_name: val})} style={styles.input} returnKeyType="go"/>
+        <TextInput placeholder="Enter Last Name" onChangeText={(val)=>this.setState({last_name: val})} style={styles.input} returnKeyType="go"/>
 
-        <Text>
-          {this.state.image}
-          Select Your Image
-        </Text>
-        <TextInput onChangeText={(val)=>this.setState({image: val})} style={styles.input} returnKeyType="go"/>
-
+        <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+            <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
+            { this.state.avatarSource === null ? <Text>Select a Photo</Text> :
+              <Image style={styles.avatar} source={this.state.avatarSource} />
+            }
+            </View>
+          </TouchableOpacity>
             <TouchableOpacity style={styles.buttonContainer} onPress={this.onRegisterPressed.bind(this)}>
               <Text style={styles.buttonText}>
                 Create New User
@@ -130,6 +180,18 @@ buttonContainerBack: {
 buttonText: {
   textAlign: 'center'
 },
+avatarContainer: {
+  borderColor: '#9B9B9B',
+  borderWidth: 1 / PixelRatio.get(),
+  justifyContent: 'center',
+  alignItems: 'center'
+},
+avatar: {
+  borderRadius: 75,
+  width: 150,
+  height: 150
+},
+
   })
 
 module.exports = Second;
