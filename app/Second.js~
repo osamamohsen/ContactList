@@ -17,8 +17,9 @@ import ImagePicker from 'react-native-image-picker';
 var FileUpload = require('NativeModules').FileUpload;
 
 class Second extends Component {
-  constructor (context,props){
-  super(context,props);
+  constructor (){
+  super();
+
   this.state ={
     first_name: "",
     last_name: "",
@@ -69,7 +70,7 @@ class Second extends Component {
       this.setState({
         avatarSource: source,
         imgBase64: temp,
-	image: "data:image/jpeg;base64,"+temp,
+	image: "data:image/jpeg;base64,"+temp
       });
     }
   });
@@ -78,7 +79,7 @@ class Second extends Component {
 
   async onRegisterPressed(){
     try {
-      let response = await fetch('http://192.168.0.127/levelUpworkspace/laravel/react/public/users',{
+      let response = await fetch('http://192.168.1.106/ReactLaravel/react/public/users',{
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -101,7 +102,6 @@ class Second extends Component {
   }
 
 onbButtonPressedBack(){
-  // console.log(this.props.users);
   this.props.navigator.push({
     id: 'First'
   })

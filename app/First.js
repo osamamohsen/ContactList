@@ -5,6 +5,8 @@ import {
   Text,
   View,
   Image,
+  ScrollView,
+  RefreshControl,
   TouchableHighlight,
 } from 'react-native';
 
@@ -15,9 +17,9 @@ class First extends Component {
   constructor(props, context) {
     super(props, context);
 
-    /*this.state = {
-      usersD: null
-    };*/
+    this.state = {
+      refreshing: false,
+    };
 
   }
 
@@ -38,6 +40,11 @@ class First extends Component {
     })
   }
 
+  onRefresh(){
+    console.log("here","Refreshed Click");
+
+  }
+
   render() {
     console.log('data in first is',this.props.users);
     if(this.props.users) {
@@ -45,14 +52,14 @@ class First extends Component {
 
         return (
           <View>
-            <Text key={i}>
-              {item.first_name}
-            </Text>
-            <Text key={i+1}>
-              {item.last_name}
-            </Text>
-            <Image key={i+2} source={{uri: item.image}}
-            style={{width: 40, height: 40}} />
+              <Text key={i}>
+                {item.first_name}
+              </Text>
+              <Text key={i+1}>
+                {item.last_name}
+              </Text>
+              <Image key={i+2} source={{uri: item.image}}
+              style={{width: 40, height: 40}} />
           </View>
         );
       });
@@ -60,11 +67,16 @@ class First extends Component {
 
     return (
       <View style={styles.container}>
-        {res}
+          {res}
         <TouchableHighlight
           onPress={this.onbButtonPressed.bind(this)}
           style={styles.buttonContainerBack}>
           <Text>Create User</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          onPress={this.onRefresh.bind(this)}
+          style={styles.buttonContainerBack}>
+          <Text>Refresh Button</Text>
         </TouchableHighlight>
       </View>
     );
