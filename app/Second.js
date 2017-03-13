@@ -15,10 +15,11 @@ import {
 
 import ImagePicker from 'react-native-image-picker';
 var FileUpload = require('NativeModules').FileUpload;
+import RNRestart from 'react-native-restart';
 
 class Second extends Component {
-  constructor (context,props){
-  super(context,props);
+  constructor (props,context){
+  super(props,context);
   this.state ={
     first_name: "",
     last_name: "",
@@ -94,6 +95,7 @@ class Second extends Component {
       });
       let responseJson = await response.json();
       console.log("res is: "+ responseJson);
+      RNRestart.Restart();
       return responseJson.movies;
     } catch(error) {
       console.error(error);
@@ -101,10 +103,14 @@ class Second extends Component {
   }
 
 onbButtonPressedBack(){
-  // console.log(this.props.users);
-  this.props.navigator.push({
-    id: 'First'
-  })
+  // console.log("data users =>",this.props.users);
+  // var x = 5;
+  // x = x+2;
+  // console.log("data x =>",x);
+
+  // this.props.navigator.push({
+  //   id: 'First'
+  // })
 }
 
   render(){

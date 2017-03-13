@@ -41,7 +41,7 @@ class First extends Component {
   }
 
   onRefresh(){
-    console.log("here","Refreshed Click");
+    console.log("data users =>",this.props.users);
 
   }
 
@@ -52,14 +52,15 @@ class First extends Component {
 
         return (
           <View>
-              <Text key={i}>
-                {item.first_name}
+              <Image key={i+2} source={{uri: item.image}}
+              style={styles.image_list} />
+
+              <Text  style={styles.box} key={i}>
+                First Name {item.first_name}
               </Text>
-              <Text key={i+1}>
+              <Text  style={styles.box} key={i+1}>
                 {item.last_name}
               </Text>
-              <Image key={i+2} source={{uri: item.image}}
-              style={{width: 40, height: 40}} />
           </View>
         );
       });
@@ -67,8 +68,11 @@ class First extends Component {
 
     return (
       <View style={styles.container}>
+        <ScrollView>
           {res}
+        </ScrollView>
         <TouchableHighlight
+          users={this.props.users}
           onPress={this.onbButtonPressed.bind(this)}
           style={styles.buttonContainerBack}>
           <Text>Create User</Text>
@@ -86,13 +90,19 @@ class First extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // width: 100%,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#dddfd4',
-
+    borderWidth:1,
+    alignSelf: 'stretch',
+    textAlign: 'center',
+    borderColor:'black',
   },
   largeText: {
-    flex: 1,
+    // flex: 1,
+    alignSelf: 'stretch',
+
     fontSize: 52,
     fontFamily: 'HelveticaNeue-CondensedBold',
     paddingTop: 40,
@@ -101,9 +111,9 @@ const styles = StyleSheet.create({
     color: '#173e43',
   },
   button: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // flex: 1,
+     justifyContent: 'center',
+     alignItems: 'center',
      alignSelf: 'stretch',
      backgroundColor: '#3fb0ac',
   },
@@ -115,7 +125,19 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: 'HelveticaNeue-CondensedBold',
     color: '#fae596',
-  }
+  },
+  box: {
+    // width: 25,
+    // height: 35,
+  },
+  image_list: {
+    width: 150,
+    height: 100,
+    marginTop: 10,
+    padding: 8,
+    alignSelf: 'stretch',
+
+  },
   })
 
 module.exports = First;

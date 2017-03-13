@@ -43,7 +43,7 @@ navigatorRenderScene(route, navigator) {
       );
     case 'Second':
       return (
-        <Second navigator={navigator} title='Second' />
+        <Second users={this.state.usersD} navigator={navigator} title='Second' />
       );
 
   }
@@ -81,9 +81,11 @@ navigatorRenderScene(route, navigator) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width:100,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    // backgroundColor: '#F5FCFF',
+    // backgroundColor: 'red',
   },
   welcome: {
     fontSize: 20,
