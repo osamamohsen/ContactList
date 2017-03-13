@@ -63,6 +63,7 @@ navigatorRenderScene(route, navigator) {
     //     );
     //   })
     // }
+
     console.log('before nav console');
     console.log('data before nav', this.state.usersD);
     return (
@@ -75,13 +76,15 @@ navigatorRenderScene(route, navigator) {
         }
       />
     );
+
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width:100,
+    // width:100,
+    alignSelf: 'stretch',
     justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor: '#F5FCFF',

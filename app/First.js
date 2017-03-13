@@ -8,6 +8,7 @@ import {
   ScrollView,
   RefreshControl,
   TouchableHighlight,
+  Alert,
 } from 'react-native';
 
 
@@ -40,14 +41,10 @@ class First extends Component {
     })
   }
 
-  onRefresh(){
-    console.log("data users =>",this.props.users);
-
-  }
-
   render() {
     console.log('data in first is',this.props.users);
     if(this.props.users) {
+
       var res = this.props.users.map((item, i) => {
 
         return (
@@ -77,11 +74,6 @@ class First extends Component {
           style={styles.buttonContainerBack}>
           <Text>Create User</Text>
         </TouchableHighlight>
-        <TouchableHighlight
-          onPress={this.onRefresh.bind(this)}
-          style={styles.buttonContainerBack}>
-          <Text>Refresh Button</Text>
-        </TouchableHighlight>
       </View>
     );
   }
@@ -90,7 +82,6 @@ class First extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // width: 100%,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#dddfd4',
@@ -133,9 +124,7 @@ const styles = StyleSheet.create({
   image_list: {
     width: 150,
     height: 100,
-    marginTop: 10,
-    padding: 8,
-    alignSelf: 'stretch',
+    marginTop: 10
 
   },
   })
